@@ -5,6 +5,7 @@ import { Message, NoticeBoard } from '../domain/NoticeBoard'
 import { ListMessages } from '../application/use-cases/ListMessages'
 import { SocketIoBroadcaster } from '../infrastructure/adapter/SocketIoBroadcaster'
 import { Server } from 'socket.io'
+import { LoggingBroadcaster } from '../infrastructure/adapter/LoggingBroadcaster'
 
 interface EchoBody {
   text: string
@@ -67,7 +68,7 @@ export async function routes(app: FastifyInstance, io: Server): Promise<FastifyI
   )
 
   app.post<{ Body: Message }>(
-    '/api/message',
+    '/api/messages',
     {
       schema: {
         body: {
@@ -87,12 +88,10 @@ export async function routes(app: FastifyInstance, io: Server): Promise<FastifyI
     async (request, reply) => {
       let { author, text } = request.body
       author =
-        new PostMessage(new NoticeBoard(50), { postedAt: new Date('2026-01-01') }, new SocketIoBroadcaster(io)).execute(
-          {
-            author,
-            text
-          }
-        )[0]?.author ?? ''
+        new PostMessage(new NoticeBoard(50), { postedAt: new Date('2026-01-01') }, new LoggingBroadcaster()).execute({
+          author,
+          text
+        })[0]?.author ?? ''
       return reply.status(201).send({
         author,
         recievedAt: new Date().toISOString()
@@ -101,7 +100,7 @@ export async function routes(app: FastifyInstance, io: Server): Promise<FastifyI
   )
 
   app.get<{ Querystring: { limit?: number } }>(
-    '/api/message',
+    '/api/messages',
     {
       schema: {
         querystring: {

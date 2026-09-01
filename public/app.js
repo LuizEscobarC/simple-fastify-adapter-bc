@@ -39,7 +39,7 @@ function setStatus(state, label) {
 
 async function loadInitial() {
   try {
-    const response = await fetch('http://localhost:3000/api/message')
+    const response = await fetch('http://localhost:3000/api/messages')
     if (!response.ok) throw new Error(response.statusText)
     const { messages } = await response.json()
     messages.forEach(render)

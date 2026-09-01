@@ -1,11 +1,15 @@
 import { MessageText } from '../../domain/MessageText'
-import { Message, NoticeBoard } from '../../domain/NoticeBoard'
+import { Message, NoticeBoard, NoticeBoardInterface } from '../../domain/NoticeBoard'
 import { Broadcaster } from '../ports/Broadcaster'
 import { Clock } from '../ports/Clock'
 
-export class PostMessage {
+export interface PostMessageInterface {
+  execute(message: Message): Message[]
+}
+
+export class PostMessage implements PostMessageInterface {
   public constructor(
-    protected readonly noticeBoard: NoticeBoard,
+    protected readonly noticeBoard: NoticeBoardInterface,
     protected readonly clock: Clock,
     protected readonly broadcaster: Broadcaster
   ) {}

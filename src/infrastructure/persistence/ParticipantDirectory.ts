@@ -1,4 +1,11 @@
-export class ParticipantDirectory {
+export interface ParticipantDirectoryInterface {
+  add(id: string, name: string): this
+  remove(id: string): void
+  nameOf(id: string): string | undefined
+  get size(): number
+}
+
+export class ParticipantDirectory implements ParticipantDirectoryInterface {
   private participants = new Map<string, string>()
 
   public add(id: string, name: string): this {

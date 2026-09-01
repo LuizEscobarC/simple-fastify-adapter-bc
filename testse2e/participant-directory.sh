@@ -59,3 +59,10 @@ import('socket.io-client').then(({ io }) => { \
 curl -sS -X POST http://localhost:3000/api/messages \
   -H 'content-type: application/json' -d '{"author":"Bob","text":"via REST"}'
 # o terminal 1 imprime "tempo real: via REST" — sem nunca ter falado com o curl
+
+
+# com LoggingBroadcaster ativo, publique por REST:
+curl -sS -X POST http://localhost:3000/api/messages \
+  -H 'content-type: application/json' -d '{"author":"Ana","text":"oi"}'
+# o servidor loga [broadcast] message {...} e o cliente conectado NÃO recebe nada
+# git diff src/application/PostMessage.ts   → vazio

@@ -1,7 +1,9 @@
 import { build } from './app.js'
+import { buildContainer } from './infrastructure/container.js'
 import { staticRoutes } from './plugins/static.js'
 import { routes } from './routes/api.js'
 import cors from '@fastify/cors'
+
 const { fastifyInstance: app, io } = build()
 
 app.register(cors, {

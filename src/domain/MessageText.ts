@@ -1,7 +1,11 @@
 import { SanitazeText } from './shared/SanitizeText'
 
-export class MessageText {
-  private constructor(readonly value: string) {}
+export interface MessageTextInterface {
+  value: string
+}
+
+export class MessageText implements MessageTextInterface {
+  private constructor(readonly value: string = '') {}
 
   public static create(raw: string): MessageText {
     const messageSanitazed = SanitazeText.sanitazeText(raw)

@@ -9,7 +9,12 @@ export interface Message {
   postedAt?: Date
 }
 
-export class NoticeBoard {
+export interface NoticeBoardInterface {
+  post(message: Message): NoticeBoard
+  recentMessages(limit?: number): Message[]
+}
+
+export class NoticeBoard implements NoticeBoardInterface {
   private readonly messages: Message[] = []
   public constructor(readonly historyLimit: number) {}
 
