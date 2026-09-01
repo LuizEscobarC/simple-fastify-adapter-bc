@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="pt-BR" class="[color-scheme:dark]">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Mural de Avisos</title>
+    <!-- Tailwind pelo CDN: sem build, sem config, só a paleta nativa. -->
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="min-h-screen flex justify-center py-6 px-4 bg-slate-950 text-slate-200">
+    <main class="w-[min(720px,100%)] flex flex-col gap-4">
+      <header class="flex items-center justify-between gap-3 flex-wrap">
+        <h1 class="text-xl font-bold">Mural de Avisos</h1>
+
+        <!-- `group` + variantes data-* : o app.js continua só trocando data-state. -->
+        <div
+          id="status"
+          data-state="connecting"
+          class="group inline-flex items-center gap-2 py-1.5 px-3 rounded-full border border-slate-800 bg-slate-900 text-sm text-slate-400"
+        >
+          <span
+            aria-hidden="true"
+            class="w-2 h-2 rounded-full bg-slate-500 group-data-[state=connecting]:bg-amber-400 group-data-[state=connecting]:animate-pulse group-data-[state=online]:bg-emerald-400 group-data-[state=offline]:bg-red-400"
+          ></span>
+          <span
+            id="status-label"
+            class="group-data-[state=online]:text-emerald-400 group-data-[state=offline]:text-red-400"
+            >Conectando…</span
+          >
+        </div>
+      </header>
+
+      <ol
+        id="messages"
+        aria-live="polite"
+        aria-label="Avisos publicados"
+        class="peer p-2 min-h-[240px] max-h-[55vh] overflow-y-auto flex flex-col gap-2 rounded-xl border border-slate-800 bg-slate-900 empty:hidden"
+      ></ol>
+
+      <p
+        id="empty"
+        class="peer-[:not(:empty)]:hidden p-6 text-center text-slate-400 rounded-xl border border-dashed border-slate-800"
+      >
+        Nenhum aviso ainda. Publique o primeiro.
+      </p>
+
+      <form id="composer" autocomplete="off" class="flex gap-2">
+        <input
+          id="text"
+          type="text"
+          maxlength="280"
+          autofocus
+          placeholder="Escreva um aviso curto…"
+          aria-label="Texto do aviso"
+          class="flex-1 py-3 px-4 rounded-lg border border-slate-800 bg-slate-900 placeholder:text-slate-500 focus:outline focus:outline-2 focus:outline-blue-500"
+        />
+        <button type="submit" class="py-3 px-5 rounded-lg bg-blue-500 text-white font-semibold">Publicar</button>
+      </form>
+
+      <p id="error" role="alert" hidden class="text-red-400 text-sm"></p>
+    </main>
+
+    <script src="http://localhost:3000/socket.io/socket.io.js"></script>
+    <script src="http://localhost:3000/app.js"></script>
+  </body>
+</html>

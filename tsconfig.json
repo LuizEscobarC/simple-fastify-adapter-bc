@@ -1,0 +1,10 @@
+{
+    "include": ["src/**/*.ts"],
+    "compilerOptions": {
+        "rootDir": ".",
+        "outDir": "dist",
+        "module": "nodenext",
+        "target": "es2025",
+        "strict": true
+    }
+}

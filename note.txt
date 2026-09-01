@@ -1,0 +1,29 @@
+
+
+
+back:
+src/application/Broadcaster.ts e src/infrastructure/SocketIoBroadcaster.ts
+
+// a PORTA
+export interface Broadcaster {
+  broadcast(event: string, payload: unknown): void
+}
+
+// o ADAPTADOR
+export class SocketIoBroadcaster implements Broadcaster {
+  constructor(io: Server)
+  broadcast(event: string, payload: unknown): void
+}
+SocketIoBroadcaster.broadcast
+this.io.emit(event, payload)
+
+broadcaster: Broadcaster
+this.broadcaster.broadcast('message', message)
+
+io.emit('message', ...)
+
+front:
+
+
+
+
